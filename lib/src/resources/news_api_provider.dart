@@ -19,7 +19,6 @@ class NewsApiProvider {
       HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
       HttpHeaders.cacheControlHeader: 'max-age=0,private,must-revalidate'
     });
-
     if (response.statusCode == 200) {
       final items = json.decode(response.body);
       return items;
@@ -33,13 +32,10 @@ class NewsApiProvider {
     }
   }
 
-    chartGecko(String id) async {
-    final queryParameters = {
-      'vs_currency': 'usd',
-      'days':'10000'
-    };
-    final uri =
-        Uri.https('$geckoBaseUrl', '/api/v3/coins/$id/market_chart', queryParameters);
+  chartGecko(String id) async {
+    final queryParameters = {'vs_currency': 'usd', 'days': '10000'};
+    final uri = Uri.https(
+        geckoBaseUrl, '/api/v3/coins/$id/market_chart', queryParameters);
 
     final response = await http.get(uri, headers: {
       HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
@@ -59,22 +55,17 @@ class NewsApiProvider {
     }
   }
 
-    candleGecko(String id) async {
-    final queryParameters = {
-      'vs_currency': 'usd',
-      'days':'100'
-    };
+  candleGecko(String id) async {
+    final queryParameters = {'vs_currency': 'usd', 'days': '365'};
     final uri =
-        Uri.https('$geckoBaseUrl', '/api/v3/coins/$id/ohlc', queryParameters);
+        Uri.https(geckoBaseUrl, '/api/v3/coins/$id/ohlc', queryParameters);
 
     final response = await http.get(uri, headers: {
       HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
       HttpHeaders.cacheControlHeader: 'max-age=0,private,must-revalidate'
     });
-
     if (response.statusCode == 200) {
       final items = json.decode(response.body);
-      print(items);
       return items;
       // return NewsModel.fromJson(items).news;
     } else if (response.statusCode == 401) {
@@ -86,18 +77,18 @@ class NewsApiProvider {
     }
   }
 
-    nobitex(String username, String password) async {
+  nobitex(String username, String password) async {
     final response = await http.post(
-    Uri.parse('https://api.nobitex.ir/auth/login/'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      "username":"$username",
-      "password":"$password",
-      "captcha":"api"
-    }),
-  );
+      Uri.parse('https://api.nobitex.ir/auth/login/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "username": "$username",
+        "password": "$password",
+        "captcha": "api"
+      }),
+    );
     if (response.statusCode == 200) {
       final items = json.decode(response.body);
       return items;
@@ -192,7 +183,6 @@ class NewsApiProvider {
       return NewsModel.fromJson(items).news;
     } else if (response.statusCode == 401) {
       throw Exception('Error 401');
-    
     } else if (response.statusCode == 429) {
       throw Exception('Error 429');
     } else {

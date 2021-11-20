@@ -8,7 +8,7 @@ class CryptoDetail extends StatefulWidget {
   String dropDownValue = 'Line';
   late String chartType = 'Line';
 
-  CryptoDetail(this.item, this.rise);
+  CryptoDetail(this.item, this.rise, {Key? key}) : super(key: key);
 
   @override
   State<CryptoDetail> createState() => _CryptoDetailState();
@@ -16,6 +16,7 @@ class CryptoDetail extends StatefulWidget {
 
 class _CryptoDetailState extends State<CryptoDetail> {
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -25,7 +26,7 @@ class _CryptoDetailState extends State<CryptoDetail> {
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.all(10),
+            margin: const EdgeInsets.all(10),
             height: 60,
             width: 60,
             child: CachedNetworkImage(
@@ -34,7 +35,7 @@ class _CryptoDetailState extends State<CryptoDetail> {
           ),
           Text(
             '\$' + widget.item['current_price'].toString(),
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
             ),
@@ -45,15 +46,15 @@ class _CryptoDetailState extends State<CryptoDetail> {
               children: [
                 widget.rise
                     ? Container(
-                        margin: EdgeInsets.only(right: 5),
-                        child: Icon(
+                        margin: const EdgeInsets.only(right: 5),
+                        child: const Icon(
                           Icons.trending_up_outlined,
                           color: Colors.green,
                         ),
                       )
                     : Container(
-                        margin: EdgeInsets.only(right: 5),
-                        child: Icon(
+                        margin: const EdgeInsets.only(right: 5),
+                        child: const Icon(
                           Icons.trending_down_outlined,
                           color: Colors.red,
                         ),
@@ -74,7 +75,7 @@ class _CryptoDetailState extends State<CryptoDetail> {
                           widget.item['price_change_percentage_24h']
                                   .toStringAsFixed(2) +
                               '%',
-                          style: TextStyle(color: Colors.red, fontSize: 18),
+                          style: const TextStyle(color: Colors.red, fontSize: 18),
                         ),
                       ),
               ],
@@ -105,7 +106,7 @@ class _CryptoDetailState extends State<CryptoDetail> {
         });
         widget.chartType = widget.dropDownValue;
       },
-      items: <String>['Line', 'Area', 'Candle']
+      items: <String>['Line', 'Area', 'Ohlc', 'Candle']
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
@@ -113,8 +114,8 @@ class _CryptoDetailState extends State<CryptoDetail> {
         );
       }).toList(),
     ),
-          SizedBox(
-            height: 50,
+          const SizedBox(
+            height: 20,
           ),
           ChartAl(widget.item['id'], widget.chartType),
           // Text('Technical Chart'),

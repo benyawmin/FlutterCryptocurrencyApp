@@ -123,10 +123,11 @@ class LatestNewsBloc {
 
   login(username, password) async {
     final response = await _repository.nobitex(username, password);
-    if (response == 'Error')
+    if (response == 'Error') {
       _login.sink.addError('Wrong login information! Try again');
-    else
+    } else {
       _login.sink.add(response);
+    }
   }
 
   dispose() {

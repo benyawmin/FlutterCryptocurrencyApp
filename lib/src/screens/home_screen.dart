@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'Search.dart';
+import 'search.dart';
 import 'categories.dart';
 import 'chart_al.dart';
 import 'prices.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
   createState() {
-    return new HomeScreenState();
+    return HomeScreenState();
   }
 }
 
@@ -15,7 +18,7 @@ class HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 2;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static List<Widget> _widgetOptions = <Widget>[
+  static final List<Widget> _widgetOptions = <Widget>[
     ChartAl('null', 'Line'),
     Profile(),
     News(),
@@ -26,10 +29,11 @@ class HomeScreenState extends State<HomeScreen> {
     // Home(),
   ];
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Crypto'),
+          title: const Text('Crypto'),
           backgroundColor: Colors.purple[700],
         ),
         body: Center(
@@ -38,7 +42,7 @@ class HomeScreenState extends State<HomeScreen> {
         bottomNavigationBar: Container(
           width: 20,
           child: Card(
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
               topLeft: Radius.circular(50),
               topRight: Radius.circular(50),

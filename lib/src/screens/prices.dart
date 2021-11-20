@@ -12,6 +12,8 @@ class Profile extends StatelessWidget {
   static const TextStyle proftxtunderlined = TextStyle(
       color: Colors.white, decoration: TextDecoration.underline, fontSize: 14);
 
+  const Profile({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final bloc = LatestNewsProvider.of(context);
@@ -32,25 +34,22 @@ class Profile extends StatelessWidget {
                   bool rise;
                   if (snapshot.data[index]['price_change_percentage_24h']
                           .toString()[0] ==
-                      '-')
+                      '-') {
                     rise = false;
-                  else
+                  } else {
                     rise = true;
+                  }
                   return Container(
-                      margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                      margin:
+                          const EdgeInsets.only(top: 10, left: 10, right: 10),
                       width: 380,
                       height: 60,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               primary: Colors.white,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15)
-                                  // BorderRadius.only(
-                                  //     topLeft: Radius.circular(10),
-                                  //     topRight: Radius.circular(10))
-                                  )),
+                                  borderRadius: BorderRadius.circular(15))),
                           onPressed: () {
-                            // print(snapshot.data[index]['id']);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -70,12 +69,12 @@ class Profile extends StatelessWidget {
                                           '${(snapshot.data[index])['image']}',
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 20,
                                   ),
                                   Text(
                                     (snapshot.data[index])['name'],
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                   ),
                                 ],
                               ),
@@ -83,39 +82,44 @@ class Profile extends StatelessWidget {
                                 children: [
                                   rise
                                       ? Container(
-                                          margin: EdgeInsets.only(right: 5),
-                                          child: Icon(
+                                          margin:
+                                              const EdgeInsets.only(right: 5),
+                                          child: const Icon(
                                             Icons.trending_up_outlined,
                                             color: Colors.green,
                                           ),
                                         )
                                       : Container(
-                                          margin: EdgeInsets.only(right: 5),
-                                          child: Icon(
+                                          margin:
+                                              const EdgeInsets.only(right: 5),
+                                          child: const Icon(
                                             Icons.trending_down_outlined,
                                             color: Colors.red,
                                           ),
                                         ),
                                   rise
                                       ? Container(
-                                          margin: EdgeInsets.only(right: 10),
+                                          margin:
+                                              const EdgeInsets.only(right: 10),
                                           child: Text(
                                             snapshot.data[index][
                                                         'price_change_percentage_24h']
                                                     .toStringAsFixed(2) +
                                                 '%',
-                                            style:
-                                                TextStyle(color: Colors.green),
+                                            style: const TextStyle(
+                                                color: Colors.green),
                                           ),
                                         )
                                       : Container(
-                                          margin: EdgeInsets.only(right: 10),
+                                          margin:
+                                              const EdgeInsets.only(right: 10),
                                           child: Text(
                                             snapshot.data[index][
                                                         'price_change_percentage_24h']
                                                     .toStringAsFixed(2) +
                                                 '%',
-                                            style: TextStyle(color: Colors.red),
+                                            style: const TextStyle(
+                                                color: Colors.red),
                                           ),
                                         ),
                                   Text(
