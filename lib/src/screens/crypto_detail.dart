@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cryptocurrency/src/accessories/pallete.dart';
 import 'package:flutter/material.dart';
 import 'chart_al.dart';
 
@@ -6,7 +7,7 @@ class CryptoDetail extends StatefulWidget {
   final item;
   bool rise;
   String dropDownValue = 'Line';
-  late String chartType = 'Line';
+  String chartType = 'Line';
 
   CryptoDetail(this.item, this.rise, {Key? key}) : super(key: key);
 
@@ -21,7 +22,7 @@ class _CryptoDetailState extends State<CryptoDetail> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.item['name']),
-        backgroundColor: Colors.purple[700],
+        backgroundColor: Pallete.dark_primary_color,
       ),
       body: Column(
         children: [
@@ -94,11 +95,11 @@ class _CryptoDetailState extends State<CryptoDetail> {
       value: widget.dropDownValue,
       icon: const Icon(Icons.arrow_downward),
       iconSize: 24,
-      elevation: 16,
+      elevation: 8,
       style: const TextStyle(color: Colors.deepPurple),
       underline: Container(
         height: 2,
-        color: Colors.deepPurpleAccent,
+        color: Colors.deepPurple,
       ),
       onChanged: (String? newValue) {
         setState(() {

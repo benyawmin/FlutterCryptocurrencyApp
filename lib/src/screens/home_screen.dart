@@ -1,11 +1,17 @@
+import 'package:cryptocurrency/src/accessories/pallete.dart';
+import 'package:cryptocurrency/src/screens/user.dart';
+import 'package:cryptocurrency/src/widgets/user_secure_storage.dart';
 import 'package:flutter/material.dart';
-import 'search.dart';
+// import 'search.dart';
 import 'categories.dart';
 import 'chart_al.dart';
+import 'history.dart';
+import 'home.dart';
 import 'prices.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final String token;
+  const HomeScreen(this.token, {Key? key}) : super(key: key);
 
   @override
   createState() {
@@ -18,28 +24,28 @@ class HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 2;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static final List<Widget> _widgetOptions = <Widget>[
-    ChartAl('null', 'Line'),
-    Profile(),
-    News(),
-    SingleChildScrollView(
-      child: Search(),
-    ),
-    ChartAl('null', 'Line'),
-    // Home(),
-  ];
+  List<Widget> get _widgetOptions => <Widget>[
+        User(widget.token),
+        const Prices(),
+        News(),
+        History(widget.token),
+        // ChartAl('null', 'Line'),
+        // const ItemsWidget(),
+        Home(),
+      ];
 
   @override
   Widget build(BuildContext context) {
+    print(widget.token);
     return Scaffold(
         appBar: AppBar(
           title: const Text('Crypto'),
-          backgroundColor: Colors.purple[700],
+          backgroundColor: Pallete.dark_primary_color,
         ),
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
-        bottomNavigationBar: Container(
+        bottomNavigationBar: SizedBox(
           width: 20,
           child: Card(
             shape: const RoundedRectangleBorder(
@@ -64,8 +70,10 @@ class HomeScreenState extends State<HomeScreen> {
                   label: 'News',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.search),
-                  label: 'Search',
+                  icon: Icon(
+                    Icons.history,
+                  ),
+                  label: 'History',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),

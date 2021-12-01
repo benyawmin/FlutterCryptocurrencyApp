@@ -1,24 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cryptocurrency/src/accessories/pallete.dart';
 import 'package:cryptocurrency/src/blocs/latest_news_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'crypto_detail.dart';
 
-class Profile extends StatelessWidget {
-  static const TextStyle proftxtnormal =
-      TextStyle(color: Colors.white, fontSize: 14);
-  static const TextStyle proftxtbold =
-      TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16);
-  static const TextStyle proftxtunderlined = TextStyle(
-      color: Colors.white, decoration: TextDecoration.underline, fontSize: 14);
+class Prices extends StatelessWidget {
+  // static const TextStyle proftxtnormal =
+  //     TextStyle(color: Colors.white, fontSize: 14);
+  // static const TextStyle proftxtbold =
+  //     TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16);
+  // static const TextStyle proftxtunderlined = TextStyle(
+  //     color: Colors.white, decoration: TextDecoration.underline, fontSize: 14);
 
-  const Profile({Key? key}) : super(key: key);
+  const Prices({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final bloc = LatestNewsProvider.of(context);
     bloc.pingGecko();
-    return Container(
+    return SizedBox(
       height: 500,
       child: StreamBuilder(
         stream: bloc.geckoStream,
@@ -70,11 +71,14 @@ class Profile extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(
-                                    width: 20,
+                                    width: 5,
                                   ),
                                   Text(
                                     (snapshot.data[index])['name'],
-                                    style: const TextStyle(color: Colors.black),
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
@@ -107,7 +111,9 @@ class Profile extends StatelessWidget {
                                                     .toStringAsFixed(2) +
                                                 '%',
                                             style: const TextStyle(
-                                                color: Colors.green),
+                                                color: Colors.green,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold),
                                           ),
                                         )
                                       : Container(
@@ -119,14 +125,19 @@ class Profile extends StatelessWidget {
                                                     .toStringAsFixed(2) +
                                                 '%',
                                             style: const TextStyle(
-                                                color: Colors.red),
+                                                color: Colors.red,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold),
                                           ),
                                         ),
                                   Text(
                                     ((snapshot.data[index])['current_price'])
                                             .toString() +
                                         " USD",
-                                    style: TextStyle(color: Colors.purple[700]),
+                                    style: TextStyle(
+                                        color: Colors.purple[700],
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               )
@@ -138,7 +149,7 @@ class Profile extends StatelessWidget {
           }
           return Center(
               child: CircularProgressIndicator(
-            color: Colors.purple[700],
+            color: Pallete.dark_primary_color,
           ));
         },
       ),

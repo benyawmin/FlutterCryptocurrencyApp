@@ -22,7 +22,7 @@ class Search extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(
+            margin: const EdgeInsets.only(
               // right: 10,
               left: 10,
               top: 20,
@@ -32,12 +32,12 @@ class Search extends StatelessWidget {
                 Container(
                   width: 32,
                   height: 32,
-                  child: CircleAvatar(
+                  child: const CircleAvatar(
                     backgroundImage: NetworkImage(
                         'https://thispersondoesnotexist.com/image'),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 SearchBar(),
@@ -45,7 +45,7 @@ class Search extends StatelessWidget {
             ),
           ),
           Container(
-            child: TabBar(
+            child: const TabBar(
                 isScrollable: true,
                 unselectedLabelColor: Colors.black,
                 labelColor: Colors.blue,
@@ -70,7 +70,7 @@ class Search extends StatelessWidget {
                       if (snapshot.hasData) {
                         return NewsListBuilder(snapshot);
                       } else if (snapshot.hasError) {
-                        return Text('No results found');
+                        return const Text('No results found');
                       }
                       bloc.fetchLatestNews();
                       return Expanded(
@@ -92,7 +92,7 @@ class Search extends StatelessWidget {
                       if (snapshot.hasData) {
                         return NewsListBuilder(snapshot);
                       } else if (snapshot.hasError) {
-                        return Text('No results found');
+                        return const Text('No results found');
                       }
                       bloc.c1Fetch('programming');
                       return Expanded(
@@ -114,7 +114,7 @@ class Search extends StatelessWidget {
                       if (snapshot.hasData) {
                         return NewsListBuilder(snapshot);
                       } else if (snapshot.hasError) {
-                        return Text('No results found');
+                        return const Text('No results found');
                       }
                       bloc.c2Fetch('general');
                       return Expanded(
@@ -136,7 +136,7 @@ class Search extends StatelessWidget {
                       if (snapshot.hasData) {
                         return NewsListBuilder(snapshot);
                       } else if (snapshot.hasError) {
-                        return Text('No results found');
+                        return const Text('No results found');
                       }
                       bloc.c3Fetch('sports');
                       return Expanded(
@@ -158,7 +158,7 @@ class Search extends StatelessWidget {
                       if (snapshot.hasData) {
                         return NewsListBuilder(snapshot);
                       } else if (snapshot.hasError) {
-                        return Text('No results found');
+                        return const Text('No results found');
                       }
                       bloc.c4Fetch('academia');
                       return Expanded(
@@ -180,7 +180,7 @@ class Search extends StatelessWidget {
                       if (snapshot.hasData) {
                         return NewsListBuilder(snapshot);
                       } else if (snapshot.hasError) {
-                        return Text('No results found');
+                        return const Text('No results found');
                       }
                       bloc.c5Fetch('politics');
                       return Expanded(

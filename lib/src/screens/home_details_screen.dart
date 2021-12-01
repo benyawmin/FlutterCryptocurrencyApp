@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cryptocurrency/src/accessories/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -8,8 +9,9 @@ class HomeDetailsScreen extends StatefulWidget {
 
   HomeDetailsScreen(this.snapshot, this.index);
 
+  @override
   createState() {
-    return new HomeDetailsScreenState();
+    return HomeDetailsScreenState();
   }
 }
 
@@ -17,11 +19,13 @@ class HomeDetailsScreenState extends State<HomeDetailsScreen> {
   bool isLoading = true;
   late String title,url;
   
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('Details'),
+        backgroundColor: Pallete.dark_primary_color,
+        title: const Text('Details'),
       ),
       body: WebView(
           key: UniqueKey(),
@@ -99,21 +103,21 @@ class HomeDetailsScreenState extends State<HomeDetailsScreen> {
 
   latestNewsImage(snapshot, index) {
     if ((snapshot.data[index]).image != '') {
-      return Container(
+      return SizedBox(
         width: double.infinity,
         child: CachedNetworkImage(
           fit: BoxFit.fill,
           height: 150,
           imageUrl: snapshot.data[index].image,
-          placeholder: (context, url) => new Center(
-            child: CircularProgressIndicator(color: Colors.purple[700],),
+          placeholder: (context, url) => Center(
+            child: CircularProgressIndicator(color: Pallete.dark_primary_color,),
           ),
-          errorWidget: (context, url, error) => new Icon(Icons.error),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
         // margin: EdgeInsets.only(bottom: 10),
       );
     } else {
-      return Text('No image available or still waiting for image!');
+      return const Text('No image available or still waiting for image!');
     }
   }
 
@@ -122,15 +126,15 @@ class HomeDetailsScreenState extends State<HomeDetailsScreen> {
     for (var i in (snapshot.data[index]).category) {
       categories += i + ", ";
     }
-    if (categories != null && categories.length > 0) {
+    if (categories.isNotEmpty) {
       categories = categories.substring(0, categories.length - 2);
     }
 
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Text(
         categories,
-        style: TextStyle(
+        style: const TextStyle(
             color: Colors.orange, decoration: TextDecoration.underline),
       ),
     );

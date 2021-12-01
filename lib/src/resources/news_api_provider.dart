@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:cryptocurrency/src/models/news_model.dart';
+import 'package:cryptocurrency/src/screens/chart_al.dart';
+// import 'package:cryptocurrency/src/resources/currencies.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -44,7 +46,15 @@ class NewsApiProvider {
 
     if (response.statusCode == 200) {
       final items = json.decode(response.body);
-      return items;
+      // var xa = [];
+      // var ya = [];
+      // for (var i = 0; i < items['prices'].length; i++) {
+      //   xa.add(readTimestamp((await items['prices'][i][0])));
+      //   ya.add((await items['prices'][i][1]));
+      // }
+      // List xy = [xa, ya, items['prices']];
+
+      return items['prices'];
       // return NewsModel.fromJson(items).news;
     } else if (response.statusCode == 401) {
       throw Exception('Error 401');
@@ -66,6 +76,8 @@ class NewsApiProvider {
     });
     if (response.statusCode == 200) {
       final items = json.decode(response.body);
+      // print(items[0]);
+      // print(items.length);
       return items;
       // return NewsModel.fromJson(items).news;
     } else if (response.statusCode == 401) {
@@ -103,6 +115,96 @@ class NewsApiProvider {
     // } else {
     //   return Exception('null');
     // }
+  }
+
+  buyAndSellNobitex(String token) async {
+// List transactions = [];
+
+// for (var cs in currencies) {
+//       var response2 = await http.post(
+//       Uri.parse('https://api.nobitex.ir/market/orders/list'),
+//       headers: <String, String>{
+//         'Authorization': 'Token $token',
+//         'content-type': 'application/json',
+//       },
+//       body: jsonEncode(<String, String>{
+//         'srcCurrency': cs.toString(),
+//         'dstCurrency':'rls',
+//         'details':'2'
+//       }),
+//     );
+//     final items2 = json.decode(response2.body);
+//     transactions.add(items2);
+//       print(cs);
+
+// }
+    // print(transactions);
+    // return transactions[];
+    // } else if (response.statusCode == 401) {
+    //   return 'Error 401';
+    // } else if (response.statusCode == 429) {
+    //   return 'Error 429';
+    // } else {
+    //   // print(response.statusCode);
+    //   return 'null';
+    // }
+
+    final response = await http.post(
+      Uri.parse('https://api.nobitex.ir/users/wallets/list'),
+      headers: <String, String>{
+        'Authorization': 'Token $token',
+        // 'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{}),
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      final items = json.decode(response.body);
+      List walletIds = [];
+      for (var item in items['wallets']) {
+        walletIds.add(item['id']);
+      }
+      print(walletIds);
+
+      List transactions = [];
+
+      for (var wi in walletIds) {
+        var response2 = await http.post(
+          Uri.parse('https://api.nobitex.ir/users/wallets/transactions/list'),
+          headers: <String, String>{
+            'Authorization': 'Token $token',
+            'content-type': 'application/json',
+          },
+          body: jsonEncode(<String, String>{'wallet': wi.toString()}),
+        );
+        final items2 = json.decode(response2.body);
+        transactions.add(items2['transactions']);
+      }
+      List newTransactions = transactions.where((i) => i.length != 0).toList();
+      List allTransactions = [];
+      for (var i = 0; i < newTransactions.length; i++) {
+        for (var j = 0; j < newTransactions[i].length; j++) {
+          allTransactions.add(newTransactions[i][j]);
+        }
+      }
+// print(newTransactions[0].toString());
+// print(newTransactions[0].toString());
+
+      print(allTransactions);
+      List buyAndSellTransactions = allTransactions.where((element) => !element['description']
+      .contains('address') && element['currency'] != 'rls'
+      )
+      .toList();
+      print(buyAndSellTransactions);
+      return buyAndSellTransactions;
+    } else if (response.statusCode == 401) {
+      return 'Error 401';
+    } else if (response.statusCode == 429) {
+      return 'Error 429';
+    } else {
+      // print(response.statusCode);
+      return 'null';
+    }
   }
 
   fetchLatestNews() async {

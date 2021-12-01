@@ -1,20 +1,39 @@
 import 'package:cryptocurrency/src/accessories/pallete.dart';
 import 'package:cryptocurrency/src/blocs/latest_news_provider.dart';
+import 'package:cryptocurrency/src/widgets/user_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 
-class Chart extends StatefulWidget {
-  const Chart({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   _State createState() => _State();
 }
 
-class _State extends State<Chart> {
+class _State extends State<LoginScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool hasErr = false;
   late String errTxt;
+  bool isChecked = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    init();
+  }
+
+  Future init() async {
+    final name = await UserSecureStorage.getUserName() ?? '';
+    final password = await UserSecureStorage.getPassword() ?? '';
+
+    setState(() {
+      nameController.text = name;
+      passwordController.text = password;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +49,17 @@ class _State extends State<Chart> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: const Text('Crypto'),
-          backgroundColor: Colors.purple[700],
+          backgroundColor: Pallete.dark_primary_color,
         ),
         body: StreamBuilder(
             stream: bloc.loginStream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
+                final String token = snapshot.data['key'];
                 Navigator.pop(context);
                 WidgetsBinding.instance!.addPostFrameCallback((_) {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (_) => const HomeScreen()));
+                      MaterialPageRoute(builder: (_) => HomeScreen(token)));
                 });
               } else if (snapshot.hasError) {
                 Navigator.pop(context);
@@ -82,6 +102,22 @@ class _State extends State<Chart> {
                           ),
                         ),
                       ),
+                      Row(
+                        children: [
+                          Checkbox(
+                              value: isChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  isChecked = value!;
+                                });
+                              }),
+                          Text(
+                            'Remember me',
+                            style:
+                                TextStyle(color: Pallete.secondary_text_color),
+                          )
+                        ],
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -92,11 +128,17 @@ class _State extends State<Chart> {
                             style: ElevatedButton.styleFrom(
                                 primary: Colors.purple[700]),
                             child: const Text('Login'),
-                            onPressed: () {
+                            onPressed: () async {
                               // setState(() {
                               // isButtonPressed = true;
                               // hasErr = false;
                               showLoaderDialog(context);
+                              if (isChecked) {
+                                await UserSecureStorage.setUserName(
+                                    nameController.text);
+                                await UserSecureStorage.setPassword(
+                                    passwordController.text);
+                              }
                               bloc.login(
                                   nameController.text, passwordController.text);
                               // });

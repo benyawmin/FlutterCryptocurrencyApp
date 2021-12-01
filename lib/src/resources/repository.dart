@@ -9,7 +9,11 @@ class Repository {
   //   newsDbProvider,
   // ];
 
-  fetchLatestNews() async {
+  buyAndSellNobitex(String token) async {
+    return await NewsApiProvider().buyAndSellNobitex(token);
+  }
+  
+   fetchLatestNews() async {
     return await NewsApiProvider().fetchLatestNews();
   }
 
@@ -22,7 +26,7 @@ class Repository {
   }
 
   candleGecko(String id) async {
-        return await NewsApiProvider().candleGecko(id);
+    return await NewsApiProvider().candleGecko(id);
   }
 
   nobitex(String username, String password) async {
