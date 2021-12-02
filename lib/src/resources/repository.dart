@@ -12,8 +12,14 @@ class Repository {
   buyAndSellNobitex(String token) async {
     return await NewsApiProvider().buyAndSellNobitex(token);
   }
-  
-   fetchLatestNews() async {
+
+  orderNobitex(String token, String type, String srcCurrency,
+      String dstCurrency, String amount, String price) async {
+    return await NewsApiProvider()
+        .orderNobitex(token, type, srcCurrency, dstCurrency, amount, price);
+  }
+
+  fetchLatestNews() async {
     return await NewsApiProvider().fetchLatestNews();
   }
 

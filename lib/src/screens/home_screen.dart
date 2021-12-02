@@ -31,7 +31,7 @@ class HomeScreenState extends State<HomeScreen> {
         History(widget.token),
         // ChartAl('null', 'Line'),
         // const ItemsWidget(),
-        Home(),
+        Trade(widget.token),
       ];
 
   @override
@@ -76,8 +76,10 @@ class HomeScreenState extends State<HomeScreen> {
                   label: 'History',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
+                  icon: Icon(
+                    Icons.shopping_bag,
+                  ),
+                  label: 'Trade',
                 ),
               ],
               currentIndex: _selectedIndex,

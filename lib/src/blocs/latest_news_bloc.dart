@@ -16,6 +16,7 @@ class LatestNewsBloc {
   final _chartGecko = PublishSubject();
   final _candleGecko = PublishSubject();
   final _buyAndSellNobitex = PublishSubject();
+  final _orderNobitex = PublishSubject();
 
   final _r1 = PublishSubject();
   final _r2 = PublishSubject();
@@ -42,7 +43,7 @@ class LatestNewsBloc {
   get chartGeckoStream => _chartGecko.stream;
   get candleGeckoStream => _candleGecko.stream;
   get buyAndSellNobitexStream => _buyAndSellNobitex.stream;
-
+  get orderNobitexStream => _orderNobitex.stream;
   r1Fetch(String region) async {
     _r1.sink.add(await _repository.fetchByRegion(region));
   }
@@ -132,12 +133,18 @@ class LatestNewsBloc {
     }
   }
 
-  buyAndSellNobitexx(String token) async{
+  buyAndSellNobitexx(String token) async {
     final result = await _repository.buyAndSellNobitex(token);
     // print(result);
     _buyAndSellNobitex.sink.add(result);
   }
 
+  orderNobitex(String token, String type, String srcCurrency,
+      String dstCurrency, String amount, String price) async {
+    final result = await _repository.orderNobitex(
+        token, type, srcCurrency, dstCurrency, amount, price);
+    _orderNobitex.sink.add(result);
+  }
 
   dispose() {
     _newsFetcher.close();

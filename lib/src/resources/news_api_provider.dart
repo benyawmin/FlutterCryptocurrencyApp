@@ -117,6 +117,36 @@ class NewsApiProvider {
     // }
   }
 
+  orderNobitex(String token, String type, String srcCurrency,
+      String dstCurrency, String amount, String price) async {
+    final response = await http.post(
+      Uri.parse('https://api.nobitex.ir/market/orders/add'),
+      headers: <String, String>{
+        'Authorization': 'Token $token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, String>{
+        "type": type,
+        "srcCurrency": srcCurrency,
+        "dstCurrency": dstCurrency,
+        "amount": amount,
+        "price": price
+      }),
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      final items = json.decode(response.body);
+      return items;
+    } else if (response.statusCode == 401) {
+      return 'Error 401';
+    } else if (response.statusCode == 429) {
+      return 'Error 429';
+    } else {
+      // print(response.statusCode);
+      return 'null';
+    }
+  }
+
   buyAndSellNobitex(String token) async {
 // List transactions = [];
 
@@ -191,10 +221,11 @@ class NewsApiProvider {
 // print(newTransactions[0].toString());
 
       print(allTransactions);
-      List buyAndSellTransactions = allTransactions.where((element) => !element['description']
-      .contains('address') && element['currency'] != 'rls'
-      )
-      .toList();
+      List buyAndSellTransactions = allTransactions
+          .where((element) =>
+              !element['description'].contains('address') &&
+              element['currency'] != 'rls')
+          .toList();
       print(buyAndSellTransactions);
       return buyAndSellTransactions;
     } else if (response.statusCode == 401) {
