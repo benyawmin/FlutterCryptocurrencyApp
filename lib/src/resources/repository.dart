@@ -1,4 +1,4 @@
-import 'news_api_provider.dart';
+import 'api_provider.dart';
 
 class Repository {
   // List sources = [
@@ -10,33 +10,37 @@ class Repository {
   // ];
 
   buyAndSellNobitex(String token) async {
-    return await NewsApiProvider().buyAndSellNobitex(token);
+    return await ApiProvider().buyAndSellNobitex(token);
+  }
+
+  walletsNobitex(String token) async {
+    return await ApiProvider().walletsNobitex(token);
   }
 
   orderNobitex(String token, String type, String srcCurrency,
       String dstCurrency, String amount, String price) async {
-    return await NewsApiProvider()
+    return await ApiProvider()
         .orderNobitex(token, type, srcCurrency, dstCurrency, amount, price);
   }
 
   fetchLatestNews() async {
-    return await NewsApiProvider().fetchLatestNews();
+    return await ApiProvider().fetchLatestNews();
   }
 
   pingGecko() async {
-    return await NewsApiProvider().pingGecko();
+    return await ApiProvider().pingGecko();
   }
 
   chartGecko(String id) async {
-    return await NewsApiProvider().chartGecko(id);
+    return await ApiProvider().chartGecko(id);
   }
 
   candleGecko(String id) async {
-    return await NewsApiProvider().candleGecko(id);
+    return await ApiProvider().candleGecko(id);
   }
 
   nobitex(String username, String password) async {
-    return await NewsApiProvider().nobitex(username, password);
+    return await ApiProvider().nobitex(username, password);
   }
 
   // fetchAllFromDb() async {
@@ -44,19 +48,19 @@ class Repository {
   // }
 
   fetchSearchedNews(String searchParameter) async {
-    return await NewsApiProvider().fetchSearchedNews(searchParameter);
+    return await ApiProvider().fetchSearchedNews(searchParameter);
   }
 
   fetchByCategory(String searchParameter) async {
-    return await NewsApiProvider().fetchByCategory(searchParameter);
+    return await ApiProvider().fetchByCategory(searchParameter);
   }
 
   fetchByRegion(String region) async {
-    return await NewsApiProvider().fetchByRegion(region);
+    return await ApiProvider().fetchByRegion(region);
   }
 
   fetchAllRegions() async {
-    return await NewsApiProvider().fetchAllRegions();
+    return await ApiProvider().fetchAllRegions();
   }
 
   // resetDb() {

@@ -5,11 +5,12 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartAlClone extends StatefulWidget {
-  String id;
+  String dstCurrency;
+  String amount;
+  String price;
 
-  ChartAlClone(this.id, 
-  // this.chartType, 
-  {Key? key}) : super(key: key);
+  ChartAlClone(this.dstCurrency, this.amount, this.price, {Key? key})
+      : super(key: key);
   @override
   _ChartPageState createState() => _ChartPageState();
 }
@@ -17,16 +18,12 @@ class ChartAlClone extends StatefulWidget {
 class _ChartPageState extends State<ChartAlClone> {
   @override
   Widget build(BuildContext context) {
-    print(widget.id);
+    print(widget.amount);
+    print(widget.price);
+    // print(widget.dstCurrency);
     final bloc = LatestNewsProvider.of(context);
-    if (widget.id != 'null') {
-      bloc.chartGecko(widget.id);
-    }
-    if (widget.id == 'null') {
-      return CircularProgressIndicator(
-        color: Pallete.dark_primary_color,
-      );
-    }
+    bloc.chartGecko(widget.dstCurrency);
+
     return StreamBuilder(
       stream: bloc.chartGeckoStream,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -36,7 +33,7 @@ class _ChartPageState extends State<ChartAlClone> {
           var ya = [];
           late List<ChartData> chartData;
 
-          print(snapshot.data);
+          // print(snapshot.data);
 
           chartData = [];
           for (var i = 0; i < snapshot.data.length; i++) {
@@ -56,8 +53,16 @@ class _ChartPageState extends State<ChartAlClone> {
           //       end: item,
           //       borderColor: Colors.green));
           // }
-          print(snapshot.data);
+          // print(snapshot.data);
           return SfCartesianChart(
+            primaryYAxis: NumericAxis(plotBands: [
+              PlotBand(
+                  isVisible: true,
+                  borderWidth: 2,
+                  start: 60000,
+                  end: 60000,
+                  borderColor: Colors.green)
+            ]),
             primaryXAxis: DateTimeAxis(
                 dateFormat: DateFormat.yMMMd(),
                 intervalType: DateTimeIntervalType.days,
@@ -81,10 +86,13 @@ class _ChartPageState extends State<ChartAlClone> {
                     enable: true, color: Pallete.dark_primary_color)),
           );
         }
-        return Center(
-            child: CircularProgressIndicator(
-          color: Pallete.dark_primary_color,
-        ));
+        return SizedBox(
+          height: 150,
+          child: Center(
+              child: CircularProgressIndicator(
+            color: Pallete.dark_primary_color,
+          )),
+        );
       },
     );
   }

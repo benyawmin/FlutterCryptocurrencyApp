@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'categories.dart';
 import 'chart_al.dart';
 import 'history.dart';
-import 'home.dart';
+import 'trading.dart';
 import 'prices.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -31,12 +31,12 @@ class HomeScreenState extends State<HomeScreen> {
         History(widget.token),
         // ChartAl('null', 'Line'),
         // const ItemsWidget(),
-        Trade(widget.token),
+        Trading(widget.token),
       ];
 
   @override
   Widget build(BuildContext context) {
-    print(widget.token);
+    // print(widget.token);
     return Scaffold(
         appBar: AppBar(
           title: const Text('Crypto'),

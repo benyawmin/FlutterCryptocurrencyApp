@@ -17,26 +17,7 @@ class LatestNewsBloc {
   final _candleGecko = PublishSubject();
   final _buyAndSellNobitex = PublishSubject();
   final _orderNobitex = PublishSubject();
-
-  final _r1 = PublishSubject();
-  final _r2 = PublishSubject();
-  final _r3 = PublishSubject();
-
-  final _c1 = PublishSubject();
-  final _c2 = PublishSubject();
-  final _c3 = PublishSubject();
-  final _c4 = PublishSubject();
-  final _c5 = PublishSubject();
-
-  get r1Stream => _r1.stream;
-  get r2Stream => _r2.stream;
-  get r3Stream => _r3.stream;
-
-  get c1Stream => _c1.stream;
-  get c2Stream => _c2.stream;
-  get c3Stream => _c3.stream;
-  get c4Stream => _c4.stream;
-  get c5Stream => _c5.stream;
+  final _walletsNobitex = PublishSubject();
 
   get geckoStream => _gecko.stream;
   get loginStream => _login.stream;
@@ -44,37 +25,6 @@ class LatestNewsBloc {
   get candleGeckoStream => _candleGecko.stream;
   get buyAndSellNobitexStream => _buyAndSellNobitex.stream;
   get orderNobitexStream => _orderNobitex.stream;
-  r1Fetch(String region) async {
-    _r1.sink.add(await _repository.fetchByRegion(region));
-  }
-
-  r2Fetch(String region) async {
-    _r2.sink.add(await _repository.fetchByRegion(region));
-  }
-
-  r3Fetch(String region) async {
-    _r3.sink.add(await _repository.fetchByRegion(region));
-  }
-
-  c1Fetch(String category) async {
-    _c1.sink.add(await _repository.fetchByCategory(category));
-  }
-
-  c2Fetch(String category) async {
-    _c2.sink.add(await _repository.fetchByCategory(category));
-  }
-
-  c3Fetch(String category) async {
-    _c3.sink.add(await _repository.fetchByCategory(category));
-  }
-
-  c4Fetch(String category) async {
-    _c4.sink.add(await _repository.fetchByCategory(category));
-  }
-
-  c5Fetch(String category) async {
-    _c5.sink.add(await _repository.fetchByCategory(category));
-  }
 
   get newsStream => _newsFetcher.stream;
   get txtFieldStream => _txtField.stream;
@@ -82,6 +32,7 @@ class LatestNewsBloc {
   get savedNewsStream => _savedNews.stream;
   get filteredByCatStream => _filteredByCat.stream;
   get filteredByRegionStream => _filteredByRegion.stream;
+  get walletsNobitexStream => _walletsNobitex.stream;
 
   addTxt(String txt) {
     _txtField.sink.add(txt);
@@ -135,8 +86,12 @@ class LatestNewsBloc {
 
   buyAndSellNobitexx(String token) async {
     final result = await _repository.buyAndSellNobitex(token);
-    // print(result);
     _buyAndSellNobitex.sink.add(result);
+  }
+
+  walletsNobitex(String token) async {
+    final result = await _repository.walletsNobitex(token);
+    _walletsNobitex.sink.add(result);
   }
 
   orderNobitex(String token, String type, String srcCurrency,
@@ -153,20 +108,10 @@ class LatestNewsBloc {
     _searchedListBuilder.close();
     _savedNews.close();
     _filteredByRegion.close();
-
-    _r1.close();
-    _r2.close();
-    _r3.close();
-
-    _c1.close();
-    _c2.close();
-    _c3.close();
-    _c4.close();
-    _c5.close();
-
     _gecko.close();
     _login.close();
     _chartGecko.close();
     _candleGecko.close();
+    _walletsNobitex.close();
   }
 }

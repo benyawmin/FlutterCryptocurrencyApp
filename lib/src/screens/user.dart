@@ -36,30 +36,30 @@ class _UserState extends State<User> {
               print(userCurrencies);
               return Column(
                 children: [
-                          DropdownButton<String>(
-          value: widget.dropDownValue1,
-          icon: const Icon(Icons.arrow_downward),
-          iconSize: 24,
-          elevation: 8,
-          style: const TextStyle(color: Colors.deepPurple),
-          underline: Container(
-            height: 2,
-            color: Colors.deepPurple,
-          ),
-          onChanged: (String? newValue) {
-            setState(() {
-              widget.dropDownValue1 = newValue!;
-            });
-            widget.chartType = widget.dropDownValue1;
-          },
-          items: <String>['Line', 'Area', 'Ohlc', 'Candle']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-        ),
+                  DropdownButton<String>(
+                    value: widget.dropDownValue1,
+                    icon: const Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 8,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurple,
+                    ),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        widget.dropDownValue1 = newValue!;
+                      });
+                      widget.chartType = widget.dropDownValue1;
+                    },
+                    items: <String>['Line', 'Area', 'Ohlc', 'Candle']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
                   DropdownButton<String>(
                     value: widget.dropDownValue2,
                     icon: const Icon(Icons.arrow_downward),

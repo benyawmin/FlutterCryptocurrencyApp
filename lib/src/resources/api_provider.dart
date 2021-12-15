@@ -5,7 +5,7 @@ import 'package:cryptocurrency/src/screens/chart_al.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class NewsApiProvider {
+class ApiProvider {
   final baseUrl = 'api.currentsapi.services';
   final geckoBaseUrl = 'api.coingecko.com';
   final nobitexBase = 'api.nobitex.ir';
@@ -43,6 +43,7 @@ class NewsApiProvider {
       HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
       HttpHeaders.cacheControlHeader: 'max-age=0,private,must-revalidate'
     });
+    // print(response.statusCode);
 
     if (response.statusCode == 200) {
       final items = json.decode(response.body);
@@ -74,6 +75,7 @@ class NewsApiProvider {
       HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
       HttpHeaders.cacheControlHeader: 'max-age=0,private,must-revalidate'
     });
+    // print(response.statusCode);
     if (response.statusCode == 200) {
       final items = json.decode(response.body);
       // print(items[0]);
@@ -133,10 +135,46 @@ class NewsApiProvider {
         "price": price
       }),
     );
-    print(response.statusCode);
+    // print(response.statusCode);
     if (response.statusCode == 200) {
       final items = json.decode(response.body);
       return items;
+    } else if (response.statusCode == 401) {
+      return 'Error 401';
+    } else if (response.statusCode == 429) {
+      return 'Error 429';
+    } else {
+      // print(response.statusCode);
+      return 'null';
+    }
+  }
+
+  walletsNobitex(String token) async {
+    final response = await http.post(
+      Uri.parse('https://api.nobitex.ir/users/wallets/list'),
+      headers: <String, String>{
+        'Authorization': 'Token $token',
+        // 'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{}),
+    );
+    // print(response.statusCode);
+    if (response.statusCode == 200) {
+      final items = json.decode(response.body);
+      // print(items);
+      List walletsList = [];
+      for (var item in items['wallets']) {
+        if (double.parse(item['balance']) > 0 &&
+            item['currency'] != 'rls' &&
+            item['depositAddress'] == null) {
+          // print(item);
+          // print('\n');
+          walletsList.add(item['currency']);
+        }
+      }
+      // print(walletsList);
+
+      return List<String>.from(walletsList);
     } else if (response.statusCode == 401) {
       return 'Error 401';
     } else if (response.statusCode == 429) {
@@ -187,14 +225,14 @@ class NewsApiProvider {
       },
       body: jsonEncode(<String, String>{}),
     );
-    print(response.statusCode);
+    // print(response.statusCode);
     if (response.statusCode == 200) {
       final items = json.decode(response.body);
       List walletIds = [];
       for (var item in items['wallets']) {
         walletIds.add(item['id']);
       }
-      print(walletIds);
+      // print(walletIds);
 
       List transactions = [];
 
@@ -220,13 +258,13 @@ class NewsApiProvider {
 // print(newTransactions[0].toString());
 // print(newTransactions[0].toString());
 
-      print(allTransactions);
+      // print(allTransactions);
       List buyAndSellTransactions = allTransactions
           .where((element) =>
               !element['description'].contains('address') &&
               element['currency'] != 'rls')
           .toList();
-      print(buyAndSellTransactions);
+      // print(buyAndSellTransactions);
       return buyAndSellTransactions;
     } else if (response.statusCode == 401) {
       return 'Error 401';
