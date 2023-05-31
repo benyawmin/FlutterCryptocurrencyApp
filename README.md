@@ -1,6 +1,22 @@
 # cryptocurrency
 
-Flutter cryptocurrency project.
+## Flutter cryptocurrency project:
+
+- Development of an application from scratch
+- Authentiﬁcation implementation
+- Design UI UX
+- Drawing and customizing diagrams
+- Include prices
+- Add filtering
+- Using Rest API
+- Work with sqﬂite
+- Create a cross-platform Flutter app using the latest
+- Development methods, libraries and design patterns. This app contains
+- The latest news about cryptocurrencies that users can read, share
+and save them. In this app, users can trade with different types of
+of cryptocurrencies trading different types of graphs such as.
+Line, Area, Candle Stick, OHLC and customize them. They can
+log in and save their information as well.
 
 ![image](https://user-images.githubusercontent.com/62585443/146846078-36c54c6d-7fc3-4418-a2bc-f04bf512d588.png)
 ![image](https://user-images.githubusercontent.com/62585443/146846091-6e183cb2-f618-4960-8d6c-488edd77a2f1.png)
